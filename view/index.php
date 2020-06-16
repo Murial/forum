@@ -26,10 +26,6 @@
         </div>
 </nav>
 
-<section>
-    
-</section>
-
 </body>
 
 </html>
