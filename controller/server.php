@@ -76,7 +76,15 @@ if (isset($_POST['login_user'])) {
         // $password = md5($password);
         $query = "SELECT * FROM user WHERE username='$username' AND password='$password'";
         $results = mysqli_query($db, $query);
+
+        /* there is a recordset so fetch into as array */
+        $row = mysqli_fetch_assoc( $results );
+        /* extract the required variables from recordset array */
+        $userId=$row['idUser'];
+
+
         if (mysqli_num_rows($results) == 1) {
+            $_SESSION['idUser'] = $userId;
             $_SESSION['username'] = $username;
             $_SESSION['success'] = "You are now logged in";
             $_SESSION['user_logged_in'] = true;
@@ -85,6 +93,10 @@ if (isset($_POST['login_user'])) {
             array_push($errors, "Wrong username/password combination");
         }
     }
+}
+
+if (isset($_POST['add_post'])){
+    mysqli_query($this->connect, "insert into post values('idPost', 'idUser', 'category', 'date', 'title', 'article')");
 }
 
 //COMMENT SECTION PALING BAWAH
