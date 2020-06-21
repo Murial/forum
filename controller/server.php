@@ -96,7 +96,51 @@ if (isset($_POST['login_user'])) {
 }
 
 if (isset($_POST['add_post'])){
-    mysqli_query($this->connect, "insert into post values('idPost', 'idUser', 'category', 'date', 'title', 'article')");
+
+    $query_latest_idPost = "SELECT idPost FROM post WHERE idPost=(SELECT max(idPost) FROM post);";
+
+    // $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
+    $result = mysqli_query($db, $query_latest_idPost);
+    $latest_idPost = mysqli_fetch_assoc($result);
+
+    foreach ($latest_idPost as $data) {
+
+        if ($data) {
+            $alpha = substr($data, 0, 1); // ngambil character dari index ke-1 dimasukin ke variabel alpha
+            $numeric = substr($data, 2, 9); // ngambil 9 character sisa dari idPost terakhir mulai dari character kedua dimasukin ke variabel numeric
+            $numeric++; // nambah 1 nilai numeric 
+            $numeric = str_pad($numeric, 9, '0', STR_PAD_LEFT); // Pad $numeric with leading zeros
+            $idPost = $alpha . $numeric; // Concatenate the two variables into $newids
+        }
+    }
+
+    $idUser = mysqli_real_escape_string($db, $_SESSION['idUser']);
+    $category = mysqli_real_escape_string($db, $_POST['category']);
+    $title = mysqli_real_escape_string($db, $_POST['title']);
+    $article = mysqli_real_escape_string($db, $_POST['article']);
+
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($category)) {
+        array_push($errors, "Masukkan kategori post!");
+    }
+    if (empty($title)) {
+        array_push($errors, "Masukkan judul post!");
+    }
+    if (empty($article)) {
+        array_push($errors, "Masukkan artikel post!");
+    }
+
+    // KLO NGGA ADA ERROR, SYSTEM NGINPUT DATANYA
+    if (count($errors) == 0) {
+
+
+        $query = "INSERT INTO post VALUES('$idPost', '$idUser', '$category', now(), '$title', '$article')";
+        mysqli_query($db, $query);
+        header('location: index.php');
+    }
+
+    
 }
 
 //COMMENT SECTION PALING BAWAH

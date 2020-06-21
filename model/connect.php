@@ -57,17 +57,20 @@ class database
 				$newids = $alpha . $numeric; // Concatenate the two variables into $newids
 			}
 		}
-
-
-
-
 		return $newids;
 	}
 
-	function add_post()
-	{
-		mysqli_query($this->connect, "insert into post values('idPost', 'idUser', 'category', 'date', 'title', 'article')");
-	}
+	// function add_post()
+	// {
+	// 	$idPost = mysqli_real_escape_string($this->connect, $_REQUEST['idPost']);
+	// 	$idUser = mysqli_real_escape_string($this->connect, $_REQUEST['idUser']);
+	// 	$category = mysqli_real_escape_string($this->connect, $_REQUEST['category']);
+	// 	$title = mysqli_real_escape_string($this->connect, $_REQUEST['title']);
+	// 	$article = mysqli_real_escape_string($this->connect, $_REQUEST['article']);
+
+
+	// 	mysqli_query($this->connect, "insert into post values('$idPost', '$idUser', '$category', now(), '$title', '$article')");
+	// }
 
 	// function input($nama, $alamat, $usia)
 	// {

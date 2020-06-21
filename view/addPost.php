@@ -29,23 +29,23 @@
                             include('../model/connect.php');
                             $db = new database ();?>
                             
-                            <p><?= $db->latest_idPost();?></p>
-                            <p><?= $_SESSION['idUser'];?></p>
+                            <p id="idPost"><?= $db->latest_idPost();?></p>
+                            <p id="idUser"><?= $_SESSION['idUser'];?></p>
 
                             <label for="category">Post Category : </label>
-                            <select name="category" id="cars">
+                            <select name="category" id="category">
                                 <option value="quest">Quest</option>
                                 <option value="monster">Monster</option>
                                 <option value="item">Item</option>
                                 <option value="shop">Shop</option>
                             </select>
                             <br><br>
-                            Post Title : <input class="input-title" type="text" name="title" placeholder="Post Title">
+                            Post Title : <input class="input-title" type="text" name="title" id="title" placeholder="Post Title">
                             <br><br>
-                            Article : <br><textarea name="article" id="" cols="70" rows="10"
+                            Article : <br><textarea name="article" id="article" cols="70" rows="10"
                                 maxlength="3000"></textarea>
                             <br><br>
-                            <input class="btn btn-primary" type="submit" name="add_post" value="Post Now">
+                            <input class="btn btn-primary" type="submit" name="add_post" value="Post Now"> 
                         </form>
                     </div>
                 </div>
