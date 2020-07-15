@@ -115,7 +115,7 @@
                                         <br>
                                         <input class="login-item" type="text" name="email" placeholder="Email">
                                         <br>
-                                        <input class="login-item" type="password" name="password" placeholder="Password">
+                                        <input class="login-item" type="password" name="password_1" placeholder="Password">
                                         <br>
                                         <input class="login-item" type="password" name="password_2"placeholder="Confirm Password">
                                         <br>

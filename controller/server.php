@@ -32,30 +32,50 @@ function latest_id($id, $table){
 }
 
 
-// REG USER BARU
+// --------------------------------------------START REG USER--------------------------------------------
 if (isset($_POST['reg_user'])) {
-
-    $Uid = latest_id("idUser", "user");
+    // receive all input values from the form
     $username = mysqli_real_escape_string($db, $_POST['username']);
-    $password = mysqli_real_escape_string($db, $_POST['password']);
-    $email = mysqli_real_escape_string($db, $_POST['password']);
-    $password_2 = $password;
-
-    $rs=mysqli_query($db,"select * from user where idUser = '$Uid");
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+    $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+  
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($username)) { array_push($errors, "Username is required"); }
+    if (empty($email)) { array_push($errors, "Email is required"); }
+    if (empty($password_1)) { array_push($errors, "Password is required"); }
+    if ($password_1 != $password_2) { array_push($errors, "The two passwords do not match");}
+  
+    // first check the database to make sure 
+    // a user does not already exist with the same username and/or email
+    $user_check_query = "SELECT * FROM user WHERE username='$username' OR email='$email' LIMIT 1";
+    $result = mysqli_query($db, $user_check_query);
+    $user = mysqli_fetch_assoc($result);
     
-    if (mysqli_num_rows($rs) > 0) {
-        echo "<script type='text/javascript'>alert('Login id already exist');</script>";
-        exit;
-    } 
-    elseif($password_2 != $password){
-        echo "<script type='text/javascript'>alert('Password doesn't match!');</script>";
+    if ($user) { // if user exists
+      if ($user['username'] === $username) {
+        array_push($errors, "Username already exists");
+      }
+  
+      if ($user['email'] === $email) {
+        array_push($errors, "email already exists");
+      }
     }
-    else {
-        $query = "INSERT * INTO user VALUES('$Uid', '$username', '$password', '$email', 'user', '', '', '', now(), 0)";
-        echo "<script type='text/javascript'>alert('Sign Up Successful!');</script>";
-        header('location: ../view/index.php');
+  
+    // Finally, register user if there are no errors in the form
+    if (count($errors) == 0) {
+        $Uid = latest_id("idUser", "user");
+        $password = $password_1;
+
+        $query = "INSERT INTO user VALUES('$Uid','$username', '$email', '$password', 'user', '', '', '')";
+        mysqli_query($db, $query);
+        $_SESSION['username'] = $username;
+        $_SESSION['success'] = "You are now logged in";
+        header('location: index.php');
     }
-}
+  }
+// --------------------------------------------END REG USER--------------------------------------------
 
 
 // -------------------------- Login - Sign In User ------------------------------------------------
@@ -141,56 +161,3 @@ if (isset($_POST['add_post'])) {
     }
 }
 // -------------------------- END Add Post System ------------------------------------------------
-
-
-// -------------------------- REGISTER USER - Sign Up ------------------------------------------------
-// if (isset($_POST['reg_user'])) {
-    
-//     // receive all input values from the form
-//     $username = mysqli_real_escape_string($db, $_POST['username']);
-//     $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
-//     $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
-//     $email = mysqli_real_escape_string($db, $_POST['email']);
-
-//     // form validation: ensure that the form is correctly filled ...
-//     // by adding (array_push()) corresponding error unto $errors array
-//     if (empty($username)) {
-//         array_push($errors, "Username is required");
-//     }
-//     if (empty($email)) {
-//         array_push($errors, "Email is required");
-//     }
-//     if (empty($password_1)) {
-//         array_push($errors, "Password is required");
-//     }
-//     if ($password_1 != $password_2) {
-//         array_push($errors, "The two passwords do not match");
-//     }
-
-//     // first check the database to make sure 
-//     // a user does not already exist with the same username and/or email
-//     $user_check_query = "SELECT * FROM user WHERE username='$username' OR email='$email'";
-//     $result = mysqli_query($db, $user_check_query);
-//     $user = mysqli_fetch_assoc($result);
-
-//     if ($user) { // if user exists
-//         if ($user['username'] === $username) {
-//             array_push($errors, "Username already exists");
-//         }
-//         if ($user['email'] === $email) {
-//             array_push($errors, "email already exists");
-//         }
-//     }
-
-//     // Finally, register user if there are no errors in the form
-//     if (count($errors) == 0) {
-//         $password = $password_1;
-
-//         $query = "INSERT * INTO user VALUES($idUser , $username, $password, $email, 'user', '', '', '', now(), 0)";
-//         mysqli_query($db, $query);
-//         $_SESSION['username'] = $username;
-//         $_SESSION['success'] = "You are now logged in";
-//         header('location: ../view/index.php');
-//     }
-// }
-// -------------------------- END REGISTER USER - Sign Up ------------------------------------------------
