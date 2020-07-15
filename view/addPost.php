@@ -23,13 +23,13 @@
                 <div class="col-8">
                     <div class="container post-add">
                         <h2>Create Post</h2>
-                        <form method="POST" action="../view/index.php">
+                        <form method="POST" action="../view/forum.php">
                             <?php 
                             include('../model/errors.php');
                             include('../model/connect.php');
                             $db = new database ();?>
                             
-                            <p id="idPost"><?= $db->latest_idPost();?></p>
+                            <p id="idPost"><?= $db->latest_id("idPost", "post");?></p>
                             <p id="idUser"><?= $_SESSION['idUser'];?></p>
 
                             <label for="category">Post Category : </label>
@@ -59,7 +59,7 @@
 
     <?php else : ?>
     <!------------------------------------------------- FORM LOGIN ------------------------------------------------->
-    <!-- <div class="container-fluid">
+    <div class="container-fluid">
                 <div class="row h-100 align-item-center">
                     <div class="col-sm-12 text-center">
                         <h1><strong style="color: blue;">Login.</strong></h1>
@@ -77,7 +77,7 @@
                         </form>
                     </div>
                 </div>
-            </div> -->
+            </div>
     <?php endif; ?>
 
 

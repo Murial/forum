@@ -1,82 +1,63 @@
-var $item = $('.carousel-item');
-var $wHeight = $(window).height();
-$item.eq(0).addClass('active');
-$item.height($wHeight);
-$item.addClass('full-screen');
+// FUNCTION CHECK LOGIN
+function check() {
+    if (document.form1.lid.value == "") {
+        alert("Plese Enter Login Id");
+        document.form1.lid.focus();
+        return false;
 
-$('.carousel img').each(function () {
-    var $src = $(this).attr('src');
-    var $color = $(this).attr('data-color');
-    $(this).parent().css({
-        'background-image': 'url(' + $src + ')',
-        'background-color': $color
-    });
-    $(this).remove();
-});
+    }
 
-$(window).on('resize', function () {
-    $wHeight = $(window).height();
-    $item.height($wHeight);
-});
+    if (document.form1.pass.value == "") {
+        alert("Plese Enter Your Password");
+        document.form1.pass.focus();
+        return false;
+    }
+    if (document.form1.cpass.value == "") {
+        alert("Plese Enter Confirm Password");
+        document.form1.cpass.focus();
+        return false;
+    }
+    if (document.form1.pass.value != document.form1.cpass.value) {
+        alert("Confirm Password does not matched");
+        document.form1.cpass.focus();
+        return false;
+    }
+    if (document.form1.name.value == "") {
+        alert("Plese Enter Your Name");
+        document.form1.name.focus();
+        return false;
+    }
+    if (document.form1.address.value == "") {
+        alert("Plese Enter Address");
+        document.form1.address.focus();
+        return false;
+    }
+    if (document.form1.city.value == "") {
+        alert("Plese Enter City Name");
+        document.form1.city.focus();
+        return false;
+    }
+    if (document.form1.phone.value == "") {
+        alert("Plese Enter Contact No");
+        document.form1.phone.focus();
+        return false;
+    }
+    if (document.form1.email.value == "") {
+        alert("Plese Enter your Email Address");
+        document.form1.email.focus();
+        return false;
+    }
+    e = document.form1.email.value;
+    f1 = e.indexOf('@');
+    f2 = e.indexOf('@', f1 + 1);
+    e1 = e.indexOf('.');
+    e2 = e.indexOf('.', e1 + 1);
+    n = e.length;
 
-$('.carousel').carousel({
-    interval: 6000,
-    pause: "false"
-});
-
-
-(function ($) {
-    "use strict"; // Start of use strict
-
-    // Smooth scrolling using jQuery easing
-    $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function () {
-        if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-            var target = $(this.hash);
-            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-            if (target.length) {
-                $('html, body').animate({
-                    scrollTop: (target.offset().top - 56)
-                }, 1000, "easeInOutExpo");
-                return false;
-            }
-        }
-    });
-
-    // Closes responsive menu when a scroll trigger link is clicked
-    $('.js-scroll-trigger').click(function () {
-        $('.navbar-collapse').collapse('hide');
-    });
-
-    // Activate scrollspy to add active class to navbar items on scroll
-    $('body').scrollspy({
-        target: '#mainNav',
-        offset: 56
-    });
-
-})(jQuery); // End of use strict
-
-
-//NAVBAR TRANSITION SOLID
-$(document).ready(function () {
-    // Transition effect for navbar 
-    $(window).scroll(function () {
-        // checks if window is scrolled more than 500px, adds/removes solid class
-        if ($(this).scrollTop() > 550) {
-            $('.navbar').addClass('solid');
-        } else {
-            $('.navbar').removeClass('solid');
-        }
-    });
-});
-
-$(document).ready(function () {
-    // Transition effect for navbar 
-    $(window).scroll(function () {
-        // checks if window is scrolled more than 500px, adds/removes solid class
-        if ($(this).scrollTop() > 550) {
-            $('.login').addClass('putih');
-        } else {
-            $('.login').removeClass('putih');
-        }
-    });
-});
+    if (!(f1 > 0 && f2 == -1 && e1 > 0 && e2 == -1 && f1 != e1 + 1 && e1 != f1 + 1 && f1 != n - 1 && e1 != n - 1)) {
+        alert("Please Enter valid Email");
+        document.form1.email.focus();
+        return false;
+    }
+    return true;
+}

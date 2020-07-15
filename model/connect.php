@@ -7,13 +7,15 @@ class database
 	var $db = "forum";
 	var $connect;
 
+	//CONSTRUCTOR
 	function __construct()
 	{
 		$this->connect = mysqli_connect($this->host, $this->uname, $this->pass, $this->db);
 		mysqli_select_db($this->connect, $this->db);
 	}
 
-	function tampil_data()
+	//METHOD TAMPIL DATA USER
+	function tampil_data_user()
 	{
 		$data = mysqli_query($this->connect, "select * from user");
 		while ($d = mysqli_fetch_array($data)) {
@@ -22,33 +24,40 @@ class database
 		return $hasil;
 	}
 
-	function tampil_post()
+	//METHOD HITUNG POST
+	function hitung_post()
 	{
-		$data = mysqli_query(
-			$this->connect,
-			"SELECT * FROM post LEFT JOIN user ON post.idUser=user.idUser;"
-		);
-		while ($d = mysqli_fetch_array($data)) {
-			$hasil[] = $d;
-		}
-		return $hasil;
-
-		// $idUser = $fetch_username;
+            
 	}
 
-	function latest_idPost()
+	//METHOD TAMPIL POST
+	function tampil_post()
 	{
-		$query = "SELECT idPost FROM post WHERE idPost=(SELECT max(idPost) FROM post);";
+		$query = mysqli_query($this->connect, "SELECT COUNT(idPost) FROM post");
+		$jumlahPost = mysqli_fetch_assoc($query);
 
-		// $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
+		if($jumlahPost > 0)
+		{
+			$data = mysqli_query($this->connect, "SELECT * FROM post LEFT JOIN user ON post.idUser=user.idUser;");
+
+			while ($d = mysqli_fetch_array($data)) {
+				$hasil[] = $d;
+			}
+			return $hasil;
+		}
+	}
+
+
+	//METHOD AUTO INCREMENT VARCHAR ID
+	function latest_id($id, $table)
+	{
+		$query = "SELECT $id FROM $table WHERE $id=(SELECT max($id) FROM $table);";
+		// $query = "SELECT idPost FROM post WHERE idPost=(SELECT max(idPost) FROM post);";
+
 		$result = mysqli_query($this->connect, $query);
 		$idPost = mysqli_fetch_assoc($result);
-		// var_dump($idPost);
-		// die();
 
 		foreach ($idPost as $data) {
-			// var_dump($data);
-			// die();
 			if ($data) {
 				$alpha = substr($data, 0, 1); // Get the first three characters and put them in $alpha
 				$numeric = substr($data, 3, 9); // Get the following six digits and put them in $numeric
@@ -60,8 +69,7 @@ class database
 		return $newids;
 	}
 
-	// function add_post()
-	// {
+	// function add_post(){
 	// 	$idPost = mysqli_real_escape_string($this->connect, $_REQUEST['idPost']);
 	// 	$idUser = mysqli_real_escape_string($this->connect, $_REQUEST['idUser']);
 	// 	$category = mysqli_real_escape_string($this->connect, $_REQUEST['category']);
