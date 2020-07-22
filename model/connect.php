@@ -24,10 +24,10 @@ class database
 		return $hasil;
 	}
 
+	
 	//METHOD HITUNG POST
 	function hitung_post()
 	{
-            
 	}
 
 	//METHOD TAMPIL POST
@@ -47,6 +47,22 @@ class database
 		}
 	}
 
+	//METHOD TAMPIL COMMENT
+	function tampil_comment()
+	{
+		$query = mysqli_query($this->connect, "SELECT COUNT(idComment) FROM comment");
+		$jumlahComment = mysqli_fetch_assoc($query);
+
+		if($jumlahComment > 0)
+		{
+			$data = mysqli_query($this->connect, "SELECT * FROM comment LEFT JOIN post ON comment.idUser = user.idUser;");
+
+			while ($d = mysqli_fetch_array($data)) {
+				$hasil[] = $d;
+			}
+			return $hasil;
+		}
+	}
 
 	//METHOD AUTO INCREMENT VARCHAR ID
 	function latest_id($id, $table)
@@ -69,38 +85,40 @@ class database
 		return $newids;
 	}
 
-	// function add_post(){
-	// 	$idPost = mysqli_real_escape_string($this->connect, $_REQUEST['idPost']);
-	// 	$idUser = mysqli_real_escape_string($this->connect, $_REQUEST['idUser']);
-	// 	$category = mysqli_real_escape_string($this->connect, $_REQUEST['category']);
-	// 	$title = mysqli_real_escape_string($this->connect, $_REQUEST['title']);
-	// 	$article = mysqli_real_escape_string($this->connect, $_REQUEST['article']);
+	function tampil_data($table)
+	{
+		$data = mysqli_query($this->connect, "select * from $table");
+		while ($d = mysqli_fetch_array($data)) {
+			$hasil[] = $d;
+		}
+		return $hasil;
+	}
 
+	function edit($id)
+	{
+		$data = mysqli_query($this->connect, "select * from user where id='$id'");
+		while ($d = mysqli_fetch_array($data)) {
+			$hasil[] = $d;
+		}
+		return $hasil;
+	}
 
-	// 	mysqli_query($this->connect, "insert into post values('$idPost', '$idUser', '$category', now(), '$title', '$article')");
-	// }
+	function data_edit()
+	{
+		$idUser = $_GET['idUser'];
+	    $query = "SELECT * FROM user WHERE idUser = '$idUser';";
+        $data = mysqli_query($this->connect, $query);
+        $f = mysqli_fetch_array($data);
+	}
 
-	// function input($nama, $alamat, $usia)
+	// function input($username, $email, $password, $role, $badge, $desc, $pp, $kampus)
 	// {
-	// 	mysqli_query($this->connect, "insert into user values('','$nama','$alamat','$usia')");
-	// }
-
-
-
-	// function edit($id)
-	// {
-	// 	$data = mysqli_query($this->connect, "select * from user where id='$id'");
-	// 	while ($d = mysqli_fetch_array($data))
-	// 	{
-	// 		$hasil[] = $d;
-	// 	}
-	// 	return $hasil;
+	// 	mysqli_query($this->connect, "insert into user values('','$username','$email','$password','$role','$badge','$desc','$pp','$kampus')");
 	// }
 
 	// function update($id, $nama, $alamat, $usia)
 	// {
 	// 	mysqli_query($this->connect, "update user set nama='$nama', alamat='$alamat', usia='$usia' where id='$id'");
 	// }
-
 
 }

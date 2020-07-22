@@ -44,6 +44,8 @@
         </nav>
         <!------------------------------------------------- END NAVBAR ------------------------------------------------->
 
+
+        <!------------------------------------------------- START POST SECTION ------------------------------------------------->
         <section id="postpage">
             <div class="container-fluid postpage">
                 <div class="row">
@@ -70,18 +72,19 @@
                         $db = new database();
                         // $jumlahPost = $db->hitung_post();
 
-                            foreach ($db->tampil_post() as $x) { ?>
-                                <div class="post-container">
-                                    <div class="container">
-                                        <p class="post-desc"><?php echo $x['category']; ?> | <?php echo $x['username']; ?> |
-                                            <?php echo $x['date']; ?> | <?php echo $x["idPost"]; ?></p>
-                                        <h3 class="post-title"><?php echo $x['title']; ?></h3>
-                                        <p class="post-article"><?php echo $x['article']; ?></p>
-                                    </div>
+                        foreach ($db->tampil_post() as $x) { ?>
+                            <div class="post-container">
+                                <div class="container">
+                                    <p class="post-desc"><?php echo $x['category']; ?> | <?php echo $x['username']; ?> |
+                                        <?php echo $x['date']; ?> | <?php echo $x["idPost"]; ?></p>
+                                    <h3 class="post-title"><?php echo $x['title']; ?></h3>
+                                    <p class="post-article"><?php echo $x['article']; ?></p>
                                 </div>
-                                
-                        <?php } ?>
-                        
+                            </div>
+
+
+                        <?php }  ?>
+
                         <!-- AKHIR POSTINGAN -->
                     </div>
 
@@ -92,91 +95,12 @@
                 </div>
             </div>
         </section>
+        <!-------------------------------------------------- END POST SECTION ------------------------------------------------->
 
-    <?php else : ?>
+        <!-- IF USER HASN'T LOGIN YET -->
+    <?php else : header('location:../view/login.php'); ?>
 
-        <!------------------------------------------------- MODAL SIGN IN ------------------------------------------------->
-        <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <section class="login-container">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-8 mx-auto">
-                                        <h1><strong style="color: blue;">Login.</strong></h1>
-                                        <br>
-                                        <form method="POST" action="index.php" data-toggle="modal">
-                                            <?php include('../model/errors.php'); ?>
-                                            <input class="login-item" type="text" name="username" placeholder="Username">
-                                            <br>
-                                            <input class="login-item" type="password" name="password" placeholder="Password">
-                                            <br>
-                                            <p style="margin: 10px;">Not yet a member? <a data-dismiss="modal" data-toggle="modal" href="#modalSignUp">Sign Up</a></p>
-                                            <br>
-                                            <br>
-                                            <button type="submit" class="login-button " name="login_user">Sign In</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="modal-footer"></div>
-                </div>
-            </div>
-        </div>
-        <!------------------------------------------------- END MODAL SIGN IN ------------------------------------------------->
 
-        <!------------------------------------------------- MODAL SIGN UP ------------------------------------------------->
-        <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <section class="login-container">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-lg-8 mx-auto">
-
-                                        <h1><strong style="color: blue;">Sign Up.</strong></h1>
-                                        <br>
-                                        <form method="POST" action="#modalSignUp" data-toggle="modal">
-                                            <?php include('../model/errors.php'); ?>
-                                            <input class="login-item" type="text" name="username" placeholder="Username" value="<?php echo $username; ?>">
-                                            <br>
-                                            <input class="login-item" type="text" name="email" placeholder="Email" value="<?php echo $email; ?>">
-                                            <br>
-                                            <input class="login-item" type="password" name="password_1" placeholder="Password">
-                                            <br>
-                                            <input class="login-item" type="password" name="password_2" placeholder="Confirm Password">
-                                            <br>
-                                            <p style="margin: 10px;">Already Have an Account? <a data-dismiss="modal" data-toggle="modal" href="#modalLogin">Sign In</a></p>
-                                            <br>
-                                            <button type="submit" class="login-button" name="reg_user">Sign Up</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!------------------------------------------------- END MODAL SIGN UP ------------------------------------------------->
 
     <?php endif; ?>
 

@@ -24,7 +24,7 @@
                     <div class="container post-add">
                         <h2>Create Post</h2>
                         <form method="POST" action="../view/forum.php">
-                            <?php 
+                            <?php
                             include('../model/errors.php');
                             include('../model/connect.php');
                             $db = new database ();?>

@@ -86,9 +86,13 @@ if (isset($_POST['login_user'])) {
 
     if (empty($username)) {
         array_push($errors, "Username is required");
+        echo "<script type='text/javascript'>alert('Username is required');</script>";
+        // header('location:../view/login.php');
     }
     if (empty($password)) {
         array_push($errors, "Password is required");
+        echo "<script type='text/javascript'>alert('Password is required');</script>";
+        // header('location:../view/login.php');
     }
 
     if (count($errors) == 0) {
@@ -107,11 +111,12 @@ if (isset($_POST['login_user'])) {
             $_SESSION['username'] = $username;
             $_SESSION['user_logged_in'] = true;
             echo "<script type='text/javascript'>alert('Login id already exist');</script>";
-            header('location: index.php');
+            header('location:../view/index.php');
         } else {
             array_push($errors, "Wrong username/password combination");
         }
     }
+    
 }
 // -------------------------- END Login - Sign In User ------------------------------------------------
 
@@ -161,3 +166,15 @@ if (isset($_POST['add_post'])) {
     }
 }
 // -------------------------- END Add Post System ------------------------------------------------
+
+// $aksi = $_GET['aksi'];
+//  if($aksi == "tambah"){
+//  	$db->input($_POST['nama'],$_POST['username'],$_POST['email'],$_POST['password'],$_POST['role'],$_POST['badge'],$_POST['desc'],$_POST['pp'],$_POST['kampus']);
+//  	header("location:../view/adminPanel.php");
+//  }else if($aksi == "hapus"){
+//  	$db->hapus($_GET['id']);
+// 	header("location:../View/tampil.php");
+//  }else if($aksi == "update"){
+//  	$db->update($_POST['nama'],$_POST['username'],$_POST['email'],$_POST['password'],$_POST['role'],$_POST['badge'],$_POST['desc'],$_POST['pp'],$_POST['kampus']);
+//  	header("location:../View/tampil.php");
+//  }

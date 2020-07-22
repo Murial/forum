@@ -135,3 +135,11 @@ nav .navbar-nav li a{
     color: white;
     text-shadow: 3px 3px 10px black
 }
+
+.bg-transparent.putih{
+    background-color: #00b1f7 !important;
+}
+
+.btn-primary.putih{
+    background-color: #fff;
+}
